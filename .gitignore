@@ -1,0 +1,25 @@
+# Environment variables
+# Crucial for security. Prevents your API keys from being uploaded.
+.env
+
+# Python Virtual Environment
+# Prevents uploading hundreds of megabytes of library files.
+venv/
+.venv/
+env/
+.env/
+
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE and editor specific files
+.vscode/
+.idea/
+
+# Distribution / build artifacts
+build/
+dist/
+*.egg-info/

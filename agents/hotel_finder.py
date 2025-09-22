@@ -9,7 +9,7 @@ API_KEY = os.getenv("LITEAPI_KEY")
 
 def get_hotels(
     city: str,
-    country: str, # <-- THIS IS THE ONLY LINE THAT IS MATERIALLY CHANGED
+    country: str, 
     checkin: str,
     checkout: str,
     adults: int,

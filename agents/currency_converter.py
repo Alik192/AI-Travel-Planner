@@ -21,8 +21,7 @@ def convert_currency(amount: float, from_currency: str, to_currency: str) -> Uni
                                      or a dictionary with an 'error' key on failure.
     """
     # Note: The free plan for exchangerate.host does not require an API key.
-    # The `access_key` parameter is for paid plans.
-    # If you have a paid key, ensure CURRENCY_API_KEY is set in your .env file.
+    
     url = f"https://api.exchangerate.host/convert?from={from_currency}&to={to_currency}&amount={amount}"
     if CURRENCY_API_KEY:
         url += f"&access_key={CURRENCY_API_KEY}"

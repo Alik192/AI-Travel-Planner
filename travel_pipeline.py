@@ -84,7 +84,7 @@ def vacation_plan(
     # Hotels (MODIFICATION: Pass the dynamic country code to fix the bug)
     hotels = cached_get_hotels(
         city=destination_city,
-        country=destination_country_code, # <-- This is the critical fix
+        country=destination_country_code, 
         checkin=start_date,
         checkout=return_date,
         adults=adults,

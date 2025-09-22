@@ -67,7 +67,7 @@ def search_flights(origin: str, destination: str, departure_date: str, adults: i
         print(f"--- Amadeus Error: A non-fare related error occurred: {error} ---")
         return {"error": f"Error fetching flights: {error}"}
 
-# ====== ENHANCED TEST BLOCK ======
+
 if __name__ == "__main__":
     print("--- Running Flight Finder Test ---")
     # We will test a route that is known to have data in the Amadeus test environment.

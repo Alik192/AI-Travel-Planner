@@ -3,47 +3,35 @@ import requests
 from dotenv import load_dotenv
 from typing import Optional
 
-# Load environment variables from .env file
+# ... (load_dotenv and OPENWEATHER_API_KEY are the same) ...
 load_dotenv()
-
-# Get OpenWeatherMap API key from environment variables
 OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
+
 def get_weather_forecast(city: str, country_code: str = "") -> str:
-    """
-    Gets a summarized weather forecast for a city and formats it as a string.
-
-    This function first finds the geographical coordinates (latitude and longitude)
-    for the given city. It then uses these coordinates to fetch a 7-day weather
-    forecast from the OpenWeatherMap API. Finally, it formats this information
-    into a concise, human-readable string.
-
-    Args:
-        city (str): The name of the city (e.g., "Lisbon").
-        country_code (str, optional): The two-letter ISO country code (e.g., "PT").
-                                      Helps to specify the city if the name is common.
-                                      Defaults to "".
-
-    Returns:
-        str: A string summarizing the weather forecast (e.g., "Forecast for Lisbon: ...")
-             or an error message if the forecast could not be retrieved.
-    """
+    # ... (docstring is the same) ...
     if not OPENWEATHER_API_KEY:
         return "Error: OpenWeatherMap API key is not set."
 
     try:
+        # --- MODIFICATION: Build the query string conditionally ---
+        query = city
+        if country_code:
+            query += f",{country_code}"
+
         # Step 1: Get city coordinates (geocoding)
         geo_url = (
-            f"http://api.openweathermap.org/geo/1.0/direct?q={city},{country_code}"
+            f"http://api.openweathermap.org/geo/1.0/direct?q={query}"
             f"&limit=1&appid={OPENWEATHER_API_KEY}"
         )
         geo_response = requests.get(geo_url)
-        geo_response.raise_for_status()  # Raise an exception for bad status codes
+        geo_response.raise_for_status()
         geo_data = geo_response.json()
 
         if not geo_data or "lat" not in geo_data[0]:
             return f"Error: Could not find coordinates for the city '{city}'."
 
+        # ... (The rest of the file is the same) ...
         lat, lon = geo_data[0]["lat"], geo_data[0]["lon"]
 
         # Step 2: Get 7-day forecast data
@@ -82,7 +70,7 @@ def get_weather_forecast(city: str, country_code: str = "") -> str:
         return f"An unexpected error occurred: {e}"
 
 
-# ------------------ Test ------------------
+# ... (Test block is the same) ...
 if __name__ == "__main__":
     city_test = "Lisbon"
     country_test = "PT"
@@ -93,6 +81,6 @@ if __name__ == "__main__":
     print("-" * 20)
 
     city_test_2 = "London"
-    country_test_2 = "GB"
-    weather_summary_2 = get_weather_forecast(city_test_2, country_test_2)
+    # Test without country code to ensure the fix works
+    weather_summary_2 = get_weather_forecast(city_test_2)
     print(weather_summary_2)
